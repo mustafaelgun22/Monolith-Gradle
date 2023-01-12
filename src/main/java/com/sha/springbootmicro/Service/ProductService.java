@@ -36,5 +36,16 @@ public class ProductService implements IProductservice{
         return products;
     }
 
+    public void deleteProduct(List<Long> ids){
+        for (Long id :ids
+             ) {
+            repository.deleteById(id);
+        }
+    }
+
+    public List<?> get_all_products(){
+        return repository.findAll();
+    }
+
 
 }

@@ -5,7 +5,9 @@ import com.sha.springbootmicro.Repository.ProductRepository;
 import com.sha.springbootmicro.Service.IProductservice;
 import com.sha.springbootmicro.Service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,5 +40,11 @@ public class ProductController {
         return ResponseEntity.ok().body(products);
     }
 
+    @DeleteMapping("v1/delete/")
+    public ResponseEntity<?> deleteProducts(@RequestBody List<Long> ids){
+        mainService.deleteProduct(ids);
+        List<?> products = mainService.get_all_products();
+        return ResponseEntity.ok().body(products);
+    }
 
 }
