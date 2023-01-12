@@ -1,3 +1,1 @@
-# product_crud
-# product_crud
-# product_crud
+# ./gradlew bootRun ile çalıştır
