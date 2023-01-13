@@ -18,18 +18,16 @@ import java.util.List;
 @RequestMapping
 public class ProductController {
     @Autowired
-    private IProductservice productService;
-    @Autowired
     private ProductService mainService;
 
     @GetMapping("v1/product/{id}/")
     public ResponseEntity<Optional<Product>> getProductByid(@PathVariable long id){
-        return ResponseEntity.ok(productService.findbyid(id));
+        return ResponseEntity.ok(mainService.findbyid(id));
     }
 
     @PostMapping("v1/product/")
     public ResponseEntity<Product> createProduct(@RequestBody Product product){
-        return ResponseEntity.ok().body(productService.saveProduct(product));
+        return ResponseEntity.ok().body(mainService.saveProduct(product));
     }
 
     @GetMapping("v1/product_filters/")
