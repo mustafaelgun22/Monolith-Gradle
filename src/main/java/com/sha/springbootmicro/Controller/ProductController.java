@@ -50,7 +50,14 @@ public class ProductController {
     @GetMapping("v1/get_all_products")
     public ResponseEntity<?> get_all_products(){
         List<Product> products = mainService.find_all_products();
-        System.out.println(products);
+        return ResponseEntity.ok().body(products);
+    }
+
+
+    @GetMapping("v1/get_all_products_with_params/")
+    public ResponseEntity<?> get_all_products_with_name(@RequestParam(value = "name", required = false) String name){
+        System.out.println(name);
+        List<Product> products = mainService.find_all_products_with_name(name);
         return ResponseEntity.ok().body(products);
     }
 }

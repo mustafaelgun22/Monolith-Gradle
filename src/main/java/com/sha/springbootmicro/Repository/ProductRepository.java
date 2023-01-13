@@ -14,6 +14,9 @@ import java.util.Optional;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
-    @Query("SELECT p FROM Product p")
+    @Query(nativeQuery = true,value = "SELECT * FROM Product")
     public List<Product> find_all_products();
+
+    @Query(nativeQuery = true,value = "SELECT * FROM Product p WHERE p.name ilike %?1%")
+    public List<Product> find_all_products_with_name(String name);
 }

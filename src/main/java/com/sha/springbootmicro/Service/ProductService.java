@@ -54,4 +54,10 @@ public class ProductService implements IProductservice{
     }
 
 
+    public List<Product> find_all_products_with_name(String name ){
+        System.out.println(name);
+        return repository.find_all_products_with_name(name);
+    }
+
+
 }
