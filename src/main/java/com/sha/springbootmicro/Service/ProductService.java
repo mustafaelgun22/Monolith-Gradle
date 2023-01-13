@@ -5,6 +5,8 @@ import com.sha.springbootmicro.Repository.ProductRepository;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,6 +47,10 @@ public class ProductService implements IProductservice{
 
     public List<?> get_all_products(){
         return repository.findAll();
+    }
+
+    public List<Product> find_all_products(){
+        return repository.find_all_products();
     }
 
 

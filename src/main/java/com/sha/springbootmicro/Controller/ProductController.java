@@ -47,4 +47,10 @@ public class ProductController {
         return ResponseEntity.ok().body(products);
     }
 
+    @GetMapping("v1/get_all_products")
+    public ResponseEntity<?> get_all_products(){
+        List<Product> products = mainService.find_all_products();
+        System.out.println(products);
+        return ResponseEntity.ok().body(products);
+    }
 }
