@@ -30,6 +30,6 @@ public class ScheduleProduct {
     public void getProduct() {
         //List<Product> products=productService.find_all_products();
         //System.out.println(products);
-        log.info("The time is now {}", dateFormat.format(new Date()));
+        //log.info("The time is now {}", dateFormat.format(new Date()));
     }
 }
