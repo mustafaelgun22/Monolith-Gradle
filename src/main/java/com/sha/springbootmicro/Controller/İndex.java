@@ -19,8 +19,7 @@ public class İndex {
 
     @GetMapping("/")
     public String index(Model model) {
-        List<Product> products =productservice.find_all_products();
-        model.addAttribute("products",products);
+        model.addAttribute("products",productservice.find_all_products());
         return "index";
     }
 }
