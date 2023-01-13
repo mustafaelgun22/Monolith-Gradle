@@ -7,6 +7,9 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.util.*;
 
+
+//Bir sınıfın veri tabanında bir karşılığı olması için entity annotasyonunun olması gereklidir.
+
 @Entity
 @Table(name = "product")
 @Data
@@ -34,7 +37,7 @@ public class Product {
 
     //Temporal tarihi veritabanına hangi formatta yazılacağını belirtir.
     @Temporal(TemporalType.TIMESTAMP)
-    private Date tarih;
+    private Date date;
 
     @ManyToMany(
             cascade = CascadeType.ALL,

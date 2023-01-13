@@ -21,15 +21,14 @@ import java.util.Date;
 public class ScheduleProduct {
     private static final Logger log = LoggerFactory.getLogger(ScheduleProduct.class);
 
-    private static final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
-
-    @Autowired
     private ProductService productService;
+
+    public ScheduleProduct(ProductService productService) {
+        this.productService = productService;
+    }
 
     @Scheduled(fixedDelay=2000L)
     public void getProduct() {
-        //List<Product> products=productService.find_all_products();
-        //System.out.println(products);
-        //log.info("The time is now {}", dateFormat.format(new Date()));
+
     }
 }
