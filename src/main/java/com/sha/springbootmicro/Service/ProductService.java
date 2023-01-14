@@ -1,5 +1,6 @@
 package com.sha.springbootmicro.Service;
 
+import com.sha.springbootmicro.Exception.ProductNotFoundException;
 import com.sha.springbootmicro.Model.Product;
 import com.sha.springbootmicro.Repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,9 +14,8 @@ public class ProductService implements IProductservice{
     @Autowired
     private ProductRepository repository;
     @Override
-    public Optional<Product> findbyid(Long id) {
-        Optional<Product> product=repository.findById(id);
-        return product;
+    public Product findbyid(Long id) {
+        return repository.findById(id).orElseThrow(() -> new ProductNotFoundException("Product yok" + id));
     }
 
     @Override
