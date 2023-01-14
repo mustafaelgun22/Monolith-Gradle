@@ -1,5 +1,7 @@
 package com.sha.springbootmicro.Controller;
 
+import com.sha.springbootmicro.Dto.ProductDto;
+import com.sha.springbootmicro.Exception.ProductNotFoundException;
 import com.sha.springbootmicro.Model.Product;
 import com.sha.springbootmicro.Repository.ProductRepository;
 import com.sha.springbootmicro.Service.IProductservice;
@@ -9,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -26,8 +30,10 @@ public class ProductController {
     }
 
     @PostMapping("v1/product/")
-    public ResponseEntity<Product> createProduct(@RequestBody Product product){
-        return ResponseEntity.ok().body(mainService.saveProduct(product));
+    public ResponseEntity<ProductDto> createProduct(@RequestBody @Validated Product product){
+        Product created_product=mainService.saveProduct(product);
+        ProductDto dto = new ProductDto(created_product.getName(), created_product.getPrice());
+        return new ResponseEntity<>(dto, HttpStatus.CREATED);
     }
 
     @GetMapping("v1/product_filters/")
