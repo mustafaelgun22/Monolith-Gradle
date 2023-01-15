@@ -46,7 +46,7 @@ public class ProductController {
         return ResponseEntity.ok().body(mainService.filterbyids(ids));
     }
 
-    @DeleteMapping("v1/delete/")
+    @DeleteMapping("v1/delete_products/")
     public ResponseEntity<?> deleteProducts(@RequestBody List<Long> ids) {
         mainService.deleteProduct(ids);
         return ResponseEntity.ok().body(mainService.get_all_products());
@@ -75,7 +75,7 @@ public class ProductController {
             //field.setAccessible(true) private veya protected alana erişilebilir hale getirmek için kullanılır,
             field.setAccessible(true);
             //Reflection Utils, Spring Framework içinde sunulan bir sınıftır ve Java Reflection API'sini kullanarak
-            // kodunuzda kolayca nesne özelliklerine ve metotlarına erişmenizi sağlar.
+            // kolayca nesne özelliklerine ve metotlarına erişmenizi sağlar.
             ReflectionUtils.setField(field, product, value);
         });
         repository.save(product);
