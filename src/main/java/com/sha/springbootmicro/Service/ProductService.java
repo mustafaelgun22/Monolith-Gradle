@@ -1,5 +1,6 @@
 package com.sha.springbootmicro.Service;
 
+import com.sha.springbootmicro.Dto.ProductDto;
 import com.sha.springbootmicro.Exception.ProductNotFoundException;
 import com.sha.springbootmicro.Model.Product;
 import com.sha.springbootmicro.Repository.ProductRepository;
@@ -53,5 +54,9 @@ public class ProductService implements IProductservice{
         return repository.find_all_products_with_name(name);
     }
 
+    public ProductDto get_product_dto(Long id){
+        Product product=this.findbyid(id);
+        return new ProductDto(product.getName(), product.getPrice());
+    }
 
 }

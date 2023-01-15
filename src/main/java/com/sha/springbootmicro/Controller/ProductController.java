@@ -1,20 +1,20 @@
 package com.sha.springbootmicro.Controller;
 
 import com.sha.springbootmicro.Dto.ProductDto;
-import com.sha.springbootmicro.Exception.ProductNotFoundException;
 import com.sha.springbootmicro.Model.Product;
 import com.sha.springbootmicro.Repository.ProductRepository;
-import com.sha.springbootmicro.Service.IProductservice;
 import com.sha.springbootmicro.Service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
+import org.springframework.util.ReflectionUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.lang.reflect.Field;
+import java.util.Map;
 import java.util.Optional;
 import java.util.List;
 
@@ -23,6 +23,12 @@ import java.util.List;
 public class ProductController {
     @Autowired
     private ProductService mainService;
+
+    private ProductRepository repository;
+
+    public ProductController(ProductRepository repository) {
+        this.repository = repository;
+    }
 
     @GetMapping("v1/product/{id}/")
     public ResponseEntity<Product> getProductByid(@PathVariable long id){
@@ -57,4 +63,24 @@ public class ProductController {
     public ResponseEntity<?> get_all_products_with_name(@RequestParam(value = "name", required = false) String name){
         return ResponseEntity.ok().body(mainService.find_all_products_with_name(name));
     }
+
+
+    @RequestMapping(value = "v1/product/{id}", method = RequestMethod.PATCH, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ProductDto> partial_update(
+            @RequestBody Map<String, Object> updates,
+            @PathVariable("id") Long id) {
+        Product product = mainService.findbyid(id);
+        updates.remove("id");
+        updates.forEach((key, value) -> {
+            Field field = ReflectionUtils.findField(product.getClass(), key);
+            //field.setAccessible(true) private veya protected alana erişilebilir hale getirmek için kullanılır,
+            field.setAccessible(true);
+            //Reflection Utils, Spring Framework içinde sunulan bir sınıftır ve Java Reflection API'sini kullanarak
+            // kodunuzda kolayca nesne özelliklerine ve metotlarına erişmenizi sağlar.
+            ReflectionUtils.setField(field, product, value);
+        });
+        repository.save(product);
+        return ResponseEntity.ok(mainService.get_product_dto(id));
+    }
+
 }

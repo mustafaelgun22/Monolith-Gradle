@@ -34,10 +34,12 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.hibernate:hibernate-validator:6.1.5.Final'
 	implementation 'org.springframework:spring-context:5.3.9'
+	implementation 'org.mapstruct:mapstruct:1.5.3.Final'
 }
 
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
 
 
