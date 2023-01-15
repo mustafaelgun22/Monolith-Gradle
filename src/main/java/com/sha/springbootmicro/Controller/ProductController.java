@@ -31,36 +31,35 @@ public class ProductController {
     }
 
     @GetMapping("v1/product/{id}/")
-    public ResponseEntity<Product> getProductByid(@PathVariable long id){
+    public ResponseEntity<Product> getProductByid(@PathVariable long id) {
         return ResponseEntity.ok().body(mainService.findbyid(id));
     }
 
     @PostMapping("v1/product/")
-    public ResponseEntity<ProductDto> createProduct(@RequestBody @Validated Product product){
-        Product created_product=mainService.saveProduct(product);
-        ProductDto dto = new ProductDto(created_product.getName(), created_product.getPrice());
-        return new ResponseEntity<>(dto, HttpStatus.CREATED);
+    public ResponseEntity<ProductDto> createProduct(@RequestBody @Validated Product product) {
+        Product created_product = mainService.saveProduct(product);
+        return new ResponseEntity<>(mainService.get_product_dto(created_product.getId()), HttpStatus.CREATED);
     }
 
     @GetMapping("v1/product_filters/")
-    public ResponseEntity<List<Optional<Product>>> getfilteredproducts(@RequestBody List<Long> ids){
+    public ResponseEntity<List<Optional<Product>>> getfilteredproducts(@RequestBody List<Long> ids) {
         return ResponseEntity.ok().body(mainService.filterbyids(ids));
     }
 
     @DeleteMapping("v1/delete/")
-    public ResponseEntity<?> deleteProducts(@RequestBody List<Long> ids){
+    public ResponseEntity<?> deleteProducts(@RequestBody List<Long> ids) {
         mainService.deleteProduct(ids);
         return ResponseEntity.ok().body(mainService.get_all_products());
     }
 
     @GetMapping("v1/get_all_products")
-    public ResponseEntity<?> get_all_products(){
+    public ResponseEntity<?> get_all_products() {
         return ResponseEntity.ok().body(mainService.find_all_products());
     }
 
 
     @GetMapping("v1/get_all_products_with_params/")
-    public ResponseEntity<?> get_all_products_with_name(@RequestParam(value = "name", required = false) String name){
+    public ResponseEntity<?> get_all_products_with_name(@RequestParam(value = "name", required = false) String name) {
         return ResponseEntity.ok().body(mainService.find_all_products_with_name(name));
     }
 
