@@ -25,8 +25,7 @@ public class ProductService implements IProductservice{
 
     @Override
     public Product saveProduct(Product product){
-        Product created_product=repository.save(product);
-        return created_product;
+        return repository.save(product);
     }
 
     public List<Optional<Product>> filterbyids(List<Long> ids) {
