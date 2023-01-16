@@ -4,6 +4,7 @@ import com.sha.springbootmicro.Dto.ProductDto;
 import com.sha.springbootmicro.Exception.ProductNotFoundException;
 import com.sha.springbootmicro.Model.Product;
 import com.sha.springbootmicro.Repository.ProductRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -11,12 +12,15 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+@AllArgsConstructor
 public class ProductService implements IProductservice{
-    @Autowired
+
+    private final static String Not_Found_msg = "%s product not not";
     private ProductRepository repository;
     @Override
     public Product findbyid(Long id) {
-        return repository.findById(id).orElseThrow(() -> new ProductNotFoundException("Product yok" + id));
+        return repository.findById(id).orElseThrow(
+                () -> new ProductNotFoundException(String.format(Not_Found_msg,id)));
     }
 
     @Override
