@@ -54,7 +54,7 @@ public class ProductController {
 
     @GetMapping("v1/get_all_products")
     public ResponseEntity<?> get_all_products() {
-        return ResponseEntity.ok().body(mainService.find_all_products());
+        return ResponseEntity.ok().body(mainService.get_products_dto(mainService.find_all_products()));
     }
 
 

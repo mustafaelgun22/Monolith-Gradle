@@ -59,4 +59,14 @@ public class ProductService implements IProductservice{
         return new ProductDto(product.getName(), product.getPrice());
     }
 
+
+    // Stream, gerçekte bir veri kaynağını temsil etmez, ancak veri kaynağının öğelerine erişmenizi ve
+    // bu öğeler üzerinde işlem yapmanızı sağlar. Stream işlemleri, veri kaynağının öğelerini değiştirmez,
+    // yalnızca yeni bir veri kaynağı oluşturur.
+    public List<ProductDto> get_products_dto(List<Product> products){
+        return products.stream().map(product ->
+            this.get_product_dto(product.getId())
+            ).collect(Collectors.toList());
+    }
+
 }
