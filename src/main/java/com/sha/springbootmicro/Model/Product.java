@@ -45,4 +45,11 @@ public class Product {
             targetEntity = Gallery.class
     )
     private List<Gallery> galleries;
+
+    public Product(Long id, String name, double price, String type) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.type = type;
+    }
 }
