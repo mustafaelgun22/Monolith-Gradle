@@ -10,7 +10,11 @@ import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static com.sha.springbootmicro.Service.ServiceTestSupport.generate_product;
 import static org.mockito.Mockito.when;
@@ -43,8 +47,22 @@ class ProductServiceTest {
         Assertions.assertEquals(productService.saveProduct(product).getPrice(),product.getPrice());
     }
 
+    //TODO BURASI REFACTOR EDİLECEK
     @Test
     void filterbyids() {
+        List<Long> ids = Arrays.asList(1L, 2L, 3L);
+        List<Product> products = new ArrayList<>();
+        ids.forEach(id -> products.add(new Product(id, "Product 1", 10.0, "Description 1")));
+
+        ids.forEach(id -> when(productRepository.findById(id)).thenReturn(
+                products.stream().filter(p -> p.getId().
+                                equals(id)).findFirst()));
+
+        List<Optional<Product>> final_products = productService.filterbyids(ids);
+        Assertions.assertEquals(3, final_products.size());
+        for(Optional<Product> product : final_products) {
+            Assertions.assertTrue(product.isPresent());
+        }
     }
 
     @Test
