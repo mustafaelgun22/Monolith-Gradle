@@ -17,7 +17,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static com.sha.springbootmicro.Service.ServiceTestSupport.generate_product;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class ProductServiceTest {
@@ -47,7 +47,7 @@ class ProductServiceTest {
         Assertions.assertEquals(productService.saveProduct(product).getPrice(),product.getPrice());
     }
 
-    //TODO BURASI REFACTOR EDİLECEK
+
     @Test
     void filterbyids() {
         List<Long> ids = Arrays.asList(1L, 2L, 3L);
@@ -67,6 +67,12 @@ class ProductServiceTest {
 
     @Test
     void deleteProduct() {
+        List<Long> ids = Arrays.asList(1L, 2L, 3L);
+        productService.deleteProduct(ids);
+        //bir kere çağırılmış olmasını beklemekteyim.
+        for(Long id:ids) {
+            verify(productRepository, times(1)).deleteById(id);
+        }
     }
 
     @Test
