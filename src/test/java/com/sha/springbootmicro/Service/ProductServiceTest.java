@@ -15,6 +15,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.LongStream;
 
 import static com.sha.springbootmicro.Service.ServiceTestSupport.generate_product;
 import static org.mockito.Mockito.*;
@@ -77,6 +78,12 @@ class ProductServiceTest {
 
     @Test
     void get_all_products() {
+        List<Product> products = new ArrayList<>();
+        LongStream.range(1L, 4L).forEach(i -> {
+            products.add(new Product(i, "Product 1", 10.0, "Description 1"));
+        });
+        when(productRepository.findAll()).thenReturn(products);
+        Assertions.assertEquals(productService.get_all_products(),products);
     }
 
     @Test

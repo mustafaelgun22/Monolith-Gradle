@@ -47,7 +47,7 @@ public class ProductService implements IProductservice{
         }
     }
 
-    public List<?> get_all_products(){
+    public List<Product> get_all_products(){
         return repository.findAll();
     }
 
