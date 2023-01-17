@@ -51,10 +51,6 @@ public class ProductService implements IProductservice{
         return repository.findAll();
     }
 
-    public List<Product> find_all_products(){
-        return repository.find_all_products();
-    }
-
 
     public List<Product> find_all_products_with_name(String name ){
         return repository.find_all_products_with_name(name);

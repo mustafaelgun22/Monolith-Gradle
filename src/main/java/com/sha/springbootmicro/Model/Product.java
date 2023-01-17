@@ -17,7 +17,19 @@ import java.util.*;
 @Setter
 public class Product {
 
-    //@Lob anatasyonu veritabanında büyük veri tipi oldugunu belirtir.
+    //TODO zorunluluktan bu constructor u koydum fakat tam olarak kafamda oturmadı.
+    public Product() {
+    }
+
+    public Product(Long id, String name, double price, String type, Date date, List<Gallery> galleries) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.type = type;
+        this.date = date;
+        this.galleries = galleries;
+    }
+//@Lob anatasyonu veritabanında büyük veri tipi oldugunu belirtir.
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -45,11 +57,4 @@ public class Product {
             targetEntity = Gallery.class
     )
     private List<Gallery> galleries;
-
-    public Product(Long id, String name, double price, String type) {
-        this.id = id;
-        this.name = name;
-        this.price = price;
-        this.type = type;
-    }
 }

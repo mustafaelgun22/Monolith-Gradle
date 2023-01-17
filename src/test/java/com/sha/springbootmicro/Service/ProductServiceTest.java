@@ -53,7 +53,7 @@ class ProductServiceTest {
     void filterbyids() {
         List<Long> ids = Arrays.asList(1L, 2L, 3L);
         List<Product> products = new ArrayList<>();
-        ids.forEach(id -> products.add(new Product(id, "Product 1", 10.0, "Description 1")));
+        ids.forEach(id -> products.add(new Product(id, "Product 1", 10.0, "Description 1",null,null)));
 
         ids.forEach(id -> when(productRepository.findById(id)).thenReturn(
                 products.stream().filter(p -> p.getId().
@@ -80,14 +80,10 @@ class ProductServiceTest {
     void get_all_products() {
         List<Product> products = new ArrayList<>();
         LongStream.range(1L, 4L).forEach(i -> {
-            products.add(new Product(i, "Product 1", 10.0, "Description 1"));
+            products.add(new Product(i, "Product 1", 10.0, "Description 1",null,null));
         });
         when(productRepository.findAll()).thenReturn(products);
         Assertions.assertEquals(productService.get_all_products(),products);
-    }
-
-    @Test
-    void find_all_products() {
     }
 
     @Test
