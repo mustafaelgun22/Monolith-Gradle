@@ -4,7 +4,6 @@ import com.sha.springbootmicro.Dto.ProductDto;
 import com.sha.springbootmicro.Exception.ProductNotFoundException;
 import com.sha.springbootmicro.Model.Product;
 import com.sha.springbootmicro.Repository.ProductRepository;
-import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
@@ -21,7 +20,7 @@ public class ProductService implements IProductservice{
     }
 
     @Override
-    public Product findbyid(Long id) {
+    public Product findById(Long id) {
         return repository.findById(id).orElseThrow(
                 () -> new ProductNotFoundException(String.format(Not_Found_msg,id)));
     }
@@ -31,7 +30,7 @@ public class ProductService implements IProductservice{
         return repository.save(product);
     }
 
-    public List<Optional<Product>> filterbyids(List<Long> ids) {
+    public List<Optional<Product>> filterByIds(List<Long> ids) {
 
         List<Optional<Product>> products = ids.stream().
                 map(product -> repository.findById(product)).
@@ -47,7 +46,7 @@ public class ProductService implements IProductservice{
         }
     }
 
-    public List<Product> get_all_products(){
+    public List<Product> getAllProducts(){
         return repository.findAll();
     }
 
@@ -56,8 +55,8 @@ public class ProductService implements IProductservice{
         return repository.find_all_products_with_name(name);
     }
 
-    public ProductDto get_product_dto(Long id){
-        Product product=this.findbyid(id);
+    public ProductDto getProductDto(Long id){
+        Product product=this.findById(id);
         return new ProductDto(product.getName(), product.getPrice());
     }
 
@@ -67,7 +66,7 @@ public class ProductService implements IProductservice{
     // yalnızca yeni bir veri kaynağı oluşturur.
     public List<ProductDto> get_products_dto(List<Product> products){
         return products.stream().map(product ->
-            this.get_product_dto(product.getId())
+            this.getProductDto(product.getId())
             ).collect(Collectors.toList());
     }
 

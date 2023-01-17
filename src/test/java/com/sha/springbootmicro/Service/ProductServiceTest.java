@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import java.util.stream.LongStream;
 
 import static com.sha.springbootmicro.Service.ServiceTestSupport.generate_product;
@@ -39,7 +38,7 @@ class ProductServiceTest {
     void findbyid() {
         long id = 10;
         when(productRepository.findById(id)).thenReturn(Optional.of(generate_product(id)));
-        Assertions.assertEquals(productService.findbyid(id).getId(),generate_product(id).getId());
+        Assertions.assertEquals(productService.findById(id).getId(),generate_product(id).getId());
     }
 
     @Test
@@ -59,7 +58,7 @@ class ProductServiceTest {
                 products.stream().filter(p -> p.getId().
                                 equals(id)).findFirst()));
 
-        List<Optional<Product>> final_products = productService.filterbyids(ids);
+        List<Optional<Product>> final_products = productService.filterByIds(ids);
         Assertions.assertEquals(3, final_products.size());
         for(Optional<Product> product : final_products) {
             Assertions.assertTrue(product.isPresent());
@@ -83,7 +82,7 @@ class ProductServiceTest {
             products.add(new Product(i, "Product 1", 10.0, "Description 1",null,null));
         });
         when(productRepository.findAll()).thenReturn(products);
-        Assertions.assertEquals(productService.get_all_products(),products);
+        Assertions.assertEquals(productService.getAllProducts(),products);
     }
 
     @Test

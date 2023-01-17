@@ -32,32 +32,33 @@ public class ProductController {
 
     @GetMapping("v1/product/{id}/")
     public ResponseEntity<ProductDto> getProductByid(@PathVariable long id) {
-        return ResponseEntity.ok().body(mainService.get_product_dto(id));
+        return ResponseEntity.ok().body(mainService.getProductDto(id));
     }
 
     @PostMapping("v1/product/")
     public ResponseEntity<ProductDto> createProduct(@RequestBody @Validated Product product) {
         Product created_product = mainService.saveProduct(product);
-        return new ResponseEntity<>(mainService.get_product_dto(created_product.getId()), HttpStatus.CREATED);
+        return new ResponseEntity<>(mainService.getProductDto(created_product.getId()), HttpStatus.CREATED);
     }
 
-    @GetMapping("v1/product_filters/")
-    public ResponseEntity<List<Optional<Product>>> getfilteredproducts(@RequestBody List<Long> ids) {
-        return ResponseEntity.ok().body(mainService.filterbyids(ids));
+    @GetMapping("v1/getProductByIds/")
+    public ResponseEntity<List<Optional<Product>>> getProductByIds(@RequestBody List<Long> ids) {
+        return ResponseEntity.ok().body(mainService.filterByIds(ids));
     }
 
-    @DeleteMapping("v1/delete_products/")
-    public ResponseEntity<List<Product>> deleteProducts(@RequestBody List<Long> ids) {
+    @DeleteMapping("v1/deleteProductByIds/")
+    public ResponseEntity<List<Product>> deleteProductByIds(@RequestBody List<Long> ids) {
         mainService.deleteProduct(ids);
-        return ResponseEntity.ok().body(mainService.get_all_products());
+        return ResponseEntity.ok().body(mainService.getAllProducts());
     }
 
-    @GetMapping("v1/get_all_products")
-    public ResponseEntity<?> get_all_products() {
-        return ResponseEntity.ok().body(mainService.get_products_dto(mainService.get_all_products()));
+    @GetMapping("v1/product/")
+    public ResponseEntity<?> getAllProducts() {
+        return ResponseEntity.ok().body(mainService.get_products_dto(mainService.getAllProducts()));
     }
 
 
+    //Todo burası refactor edilecek
     @GetMapping("v1/get_all_products_with_params/")
     public ResponseEntity<?> get_all_products_with_name(@RequestParam(value = "name", required = false) String name) {
         return ResponseEntity.ok().body(mainService.find_all_products_with_name(name));
@@ -68,7 +69,7 @@ public class ProductController {
     public ResponseEntity<ProductDto> partial_update(
             @RequestBody Map<String, Object> updates,
             @PathVariable("id") Long id) {
-        Product product = mainService.findbyid(id);
+        Product product = mainService.findById(id);
         updates.remove("id");
         updates.forEach((key, value) -> {
             Field field = ReflectionUtils.findField(product.getClass(), key);
@@ -79,7 +80,7 @@ public class ProductController {
             ReflectionUtils.setField(field, product, value);
         });
         repository.save(product);
-        return ResponseEntity.ok(mainService.get_product_dto(id));
+        return ResponseEntity.ok(mainService.getProductDto(id));
     }
 
 }
