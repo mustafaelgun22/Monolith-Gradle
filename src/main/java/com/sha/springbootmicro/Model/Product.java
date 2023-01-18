@@ -57,4 +57,9 @@ public class Product {
             targetEntity = Gallery.class
     )
     private List<Gallery> galleries;
+
+    @PostPersist
+    public void postPersist() {
+        System.out.println(String.format("%s product is created", this.name));
+    }
 }
