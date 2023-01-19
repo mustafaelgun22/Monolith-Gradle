@@ -28,7 +28,30 @@ public class Product {
         this.date = date;
         this.galleries = galleries;
     }
-//@Lob anatasyonu veritabanında büyük veri tipi oldugunu belirtir.
+    private Product(Builder builder){
+        this.id = builder.id;
+        this.name = builder.name;
+        this.price = builder.price;
+        this.type = builder.type;
+    }
+
+    public static class Builder{
+        private Long id;
+        private String name;
+        private Double price;
+        private String type;
+
+        public Builder(Long id,String name, Double price, String type) {
+            this.id = id;
+            this.name = name;
+            this.price = price;
+            this.type = type;
+        }
+        public Product build(){
+            return new Product(this);
+        }
+    }
+    //@Lob anatasyonu veritabanında büyük veri tipi oldugunu belirtir.
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -61,29 +84,5 @@ public class Product {
     public void postPersist() {
         System.out.println(String.format("%s product is created", this.name));
 
-    }
-
-    private Product(Builder builder){
-        this.id = builder.id;
-        this.name = builder.name;
-        this.price = builder.price;
-        this.type = builder.type;
-    }
-
-    public static class Builder{
-        private Long id;
-        private String name;
-        private Double price;
-        private String type;
-
-        public Builder(Long id,String name, Double price, String type) {
-            this.id = id;
-            this.name = name;
-            this.price = price;
-            this.type = type;
-        }
-        public Product build(){
-            return new Product(this);
-        }
     }
 }
