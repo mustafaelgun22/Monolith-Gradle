@@ -2,7 +2,6 @@ package com.sha.springbootmicro.Controller;
 
 import com.sha.springbootmicro.Dto.ProductDto;
 import com.sha.springbootmicro.Model.Product;
-import com.sha.springbootmicro.Repository.ProductRepository;
 import com.sha.springbootmicro.Service.IService;
 import com.sha.springbootmicro.Service.ProductService;
 import com.sha.springbootmicro.Service.ServiceEnum;
@@ -45,7 +44,7 @@ public class ProductController {
 
     @PostMapping("v1/product/")
     public ResponseEntity<ProductDto> createProduct(@RequestBody @Validated Product product) {
-        Product created_product = mainService.saveProduct(product);
+        Product created_product = mainService.saveEntity(product);
         return new ResponseEntity<>(mainService.getProductDto(created_product.getId()), HttpStatus.CREATED);
     }
 

@@ -27,7 +27,7 @@ public class ProductService implements IService {
     }
 
     @Override
-    public Product saveProduct(Product product){
+    public Product saveEntity(Product product){
         return repository.save(product);
     }
 

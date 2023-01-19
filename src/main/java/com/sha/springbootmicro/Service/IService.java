@@ -2,9 +2,12 @@ package com.sha.springbootmicro.Service;
 
 import com.sha.springbootmicro.Model.Product;
 
-public interface IService {
-    public Product findById(Long id);
+import java.util.Optional;
 
-    public Product saveProduct(Product product);
+public interface IService {
+
+    public <T> T findById(Long id);
+
+    public <T> T saveEntity(Product product);
 
 }

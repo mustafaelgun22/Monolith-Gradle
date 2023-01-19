@@ -43,8 +43,8 @@ class ProductServiceTest {
 
     @Test
     void saveProduct() {
-        Mockito.when(productService.saveProduct(ArgumentMatchers.any(Product.class))).thenReturn(product);
-        Assertions.assertEquals(productService.saveProduct(product).getPrice(),product.getPrice());
+        Mockito.when(productService.saveEntity(ArgumentMatchers.any(Product.class))).thenReturn(product);
+        Assertions.assertEquals(productService.saveEntity(product).getPrice(),product.getPrice());
     }
 
 
