@@ -3,9 +3,14 @@ package com.sha.springbootmicro.Service;
 import com.sha.springbootmicro.Dto.ProductDto;
 import com.sha.springbootmicro.Exception.ProductNotFoundException;
 import com.sha.springbootmicro.Model.Product;
-import org.springframework.data.jpa.repository.JpaRepository;
+import com.sha.springbootmicro.Repository.ProductRepository;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ReflectionUtils;
+
+import java.lang.reflect.Field;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -14,9 +19,11 @@ public class ProductService implements IService {
 
     private final static String Not_Found_msg = "%s product not not";
 
-    private JpaRepository<Product,Long> repository;
 
-    public ProductService(JpaRepository repository) {
+    @Qualifier("productRepository")
+    private ProductRepository repository;
+
+    public ProductService(ProductRepository repository) {
         this.repository = repository;
     }
 
@@ -64,6 +71,19 @@ public class ProductService implements IService {
         return products.stream().map(product ->
             this.getProductDto(product.getId())
             ).collect(Collectors.toList());
+    }
+
+    public void updateProduct(Map<String, Object> updates, Product product){
+
+        updates.forEach((key, value) -> {
+            Field field = ReflectionUtils.findField(product.getClass(), key);
+            //field.setAccessible(true) private veya protected alana erişilebilir hale getirmek için kullanılır,
+            field.setAccessible(true);
+            //Reflection Utils, Spring Framework içinde sunulan bir sınıftır ve Java Reflection API'sini kullanarak
+            // kolayca nesne özelliklerine ve metotlarına erişmenizi sağlar.
+            ReflectionUtils.setField(field, product, value);
+            repository.save(product);
+        });
     }
 
 }

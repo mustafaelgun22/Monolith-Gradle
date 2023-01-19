@@ -1,23 +1,35 @@
 package com.sha.springbootmicro.Service;
 
+import com.sha.springbootmicro.Repository.GalleryRepository;
 import com.sha.springbootmicro.Repository.ProductRepository;
-import org.springframework.lang.Nullable;
-import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.Map;
-
-@Component
+@Service
 public class ServiceFactory {
 
-    public ServiceFactory(@Nullable ProductRepository productRepository) {
-        services = new HashMap<>();
-        services.put(ServiceEnum.productService, new ProductService(productRepository));
+
+    @Qualifier("productRepository")
+    private ProductRepository productRepository;
+
+
+    @Qualifier("galleryRepository")
+    private GalleryRepository galleryRepository;
+
+    public ServiceFactory(ProductRepository productRepository, GalleryRepository galleryRepository) {
+        this.productRepository = productRepository;
+        this.galleryRepository = galleryRepository;
     }
 
-    private Map<ServiceEnum, IService> services;
-    public IService getService(ServiceEnum serviceEnum) {
-        return services.get(serviceEnum);
+    public IService getService(ServiceEnum type) {
+        switch (type) {
+            case productService:
+                return new ProductService(productRepository);
+            case galleryService:
+                return new GalleryService(galleryRepository);
+            default:
+                throw new IllegalArgumentException("Invalid service type");
+        }
     }
 }
 

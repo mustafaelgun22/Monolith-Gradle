@@ -7,16 +7,14 @@ import com.sha.springbootmicro.Service.ProductService;
 import com.sha.springbootmicro.Service.ServiceEnum;
 import com.sha.springbootmicro.Service.ServiceFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.ReflectionUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.lang.reflect.Field;
+
 import java.util.Map;
 import java.util.Optional;
 import java.util.List;
@@ -30,14 +28,8 @@ public class ProductController {
     @Autowired
     private ServiceFactory serviceFactory;
 
-    private JpaRepository<Product,Long> repository;
-
-    public ProductController(JpaRepository<Product,Long> repository) {
-        this.repository = repository;
-    }
-
     @GetMapping("v1/product/{id}/")
-    public ResponseEntity<Product> getProductByid(@PathVariable long id) {
+    public ResponseEntity<?> getProductByid(@PathVariable long id) {
         IService service = serviceFactory.getService(ServiceEnum.productService);
         return ResponseEntity.ok().body(service.findById(id));
     }
@@ -78,15 +70,7 @@ public class ProductController {
             @PathVariable("id") Long id) {
         Product product = mainService.findById(id);
         updates.remove("id");
-        updates.forEach((key, value) -> {
-            Field field = ReflectionUtils.findField(product.getClass(), key);
-            //field.setAccessible(true) private veya protected alana erişilebilir hale getirmek için kullanılır,
-            field.setAccessible(true);
-            //Reflection Utils, Spring Framework içinde sunulan bir sınıftır ve Java Reflection API'sini kullanarak
-            // kolayca nesne özelliklerine ve metotlarına erişmenizi sağlar.
-            ReflectionUtils.setField(field, product, value);
-        });
-        repository.save(product);
+        mainService.updateProduct(updates,product);
         return ResponseEntity.ok(mainService.getProductDto(id));
     }
 
