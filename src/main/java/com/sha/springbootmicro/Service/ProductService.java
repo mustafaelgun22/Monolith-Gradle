@@ -4,18 +4,20 @@ import com.sha.springbootmicro.Dto.ProductDto;
 import com.sha.springbootmicro.Exception.ProductNotFoundException;
 import com.sha.springbootmicro.Model.Product;
 import com.sha.springbootmicro.Repository.ProductRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-public class ProductService implements IProductservice{
+public class ProductService implements IService {
 
     private final static String Not_Found_msg = "%s product not not";
-    private final ProductRepository repository;
 
-    public ProductService(ProductRepository repository) {
+    private JpaRepository<Product,Long> repository;
+
+    public ProductService(JpaRepository repository) {
         this.repository = repository;
     }
 
@@ -48,11 +50,6 @@ public class ProductService implements IProductservice{
 
     public List<Product> getAllProducts(){
         return repository.findAll();
-    }
-
-
-    public List<Product> find_all_products_with_name(String name ){
-        return repository.find_all_products_with_name(name);
     }
 
     public ProductDto getProductDto(Long id){

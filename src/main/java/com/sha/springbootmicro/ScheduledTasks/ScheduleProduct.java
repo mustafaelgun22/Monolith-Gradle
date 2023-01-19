@@ -1,21 +1,11 @@
 package com.sha.springbootmicro.ScheduledTasks;
 
-import com.sha.springbootmicro.Model.Product;
-import com.sha.springbootmicro.Service.IProductservice;
 import com.sha.springbootmicro.Service.ProductService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import java.sql.SQLOutput;
-import java.text.SimpleDateFormat;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.List;
-import java.util.Optional;
-import java.util.Date;
 
 @Component
 public class ScheduleProduct {
