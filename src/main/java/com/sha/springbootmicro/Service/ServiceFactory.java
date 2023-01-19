@@ -1,10 +1,8 @@
 package com.sha.springbootmicro.Service;
 
 import com.sha.springbootmicro.Repository.ProductRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -12,9 +10,9 @@ import java.util.Map;
 @Component
 public class ServiceFactory {
 
-    public ServiceFactory(JpaRepository repository) {
+    public ServiceFactory(@Nullable ProductRepository productRepository) {
         services = new HashMap<>();
-        services.put(ServiceEnum.productService, new ProductService(repository));
+        services.put(ServiceEnum.productService, new ProductService(productRepository));
     }
 
     private Map<ServiceEnum, IService> services;

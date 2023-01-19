@@ -72,7 +72,7 @@ public class ProductController {
 //        return ResponseEntity.ok().body(mainService.find_all_products_with_name(name));
 //    }
 
-
+    //TODO bu işlem servis katlamanına alınacak
     @RequestMapping(value = "v1/product/{id}", method = RequestMethod.PATCH, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ProductDto> partial_update(
             @RequestBody Map<String, Object> updates,

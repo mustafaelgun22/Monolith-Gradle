@@ -12,6 +12,9 @@ public class Gallery {
     @Id
     @GeneratedValue
     private Long id;
+
+    @Column(name="name",length = 150,nullable = false)
+    private String name;
     @ManyToMany
     private List<Product> products;
 }
