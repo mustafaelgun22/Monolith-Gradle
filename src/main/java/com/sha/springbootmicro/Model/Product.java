@@ -21,8 +21,7 @@ public class Product {
     public Product() {
     }
 
-    public Product(Long id, String name, double price, String type, Date date, List<Gallery> galleries) {
-        this.id = id;
+    public Product(String name, double price, String type, Date date, List<Gallery> galleries) {
         this.name = name;
         this.price = price;
         this.type = type;
@@ -61,5 +60,30 @@ public class Product {
     @PostPersist
     public void postPersist() {
         System.out.println(String.format("%s product is created", this.name));
+
+    }
+
+    private Product(Builder builder){
+        this.id = builder.id;
+        this.name = builder.name;
+        this.price = builder.price;
+        this.type = builder.type;
+    }
+
+    public static class Builder{
+        private Long id;
+        private String name;
+        private Double price;
+        private String type;
+
+        public Builder(Long id,String name, Double price, String type) {
+            this.id = id;
+            this.name = name;
+            this.price = price;
+            this.type = type;
+        }
+        public Product build(){
+            return new Product(this);
+        }
     }
 }
