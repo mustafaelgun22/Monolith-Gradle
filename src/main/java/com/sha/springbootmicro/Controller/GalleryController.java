@@ -23,9 +23,9 @@ public class GalleryController {
 @Autowired
 private ServiceFactory serviceFactory;
 
-//    @PostMapping("v1/gallery")
-//    public ResponseEntity<Gallery> createGallery(@RequestBody Gallery gallery){
-//        IService service =serviceFactory.getService(ServiceEnum.galleryService);
-//        return service.saveEntity(gallery);
-//    }
+    @PostMapping("v1/gallery")
+    public ResponseEntity<?> createGallery(@RequestBody Gallery gallery){
+        IService service =serviceFactory.getService2(ServiceEnum.galleryService);
+        return ResponseEntity.ok().body(service.saveEntity(gallery));
+    }
 }

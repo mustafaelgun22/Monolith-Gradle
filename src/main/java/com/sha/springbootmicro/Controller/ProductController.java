@@ -30,7 +30,7 @@ public class ProductController {
 
     @GetMapping("v1/product/{id}/")
     public ResponseEntity<?> getProductByid(@PathVariable long id) {
-        IService service = serviceFactory.getService(ServiceEnum.productService);
+        IService service = serviceFactory.getService2(ServiceEnum.productService);
         return ResponseEntity.ok().body(service.findById(id));
     }
 
@@ -63,7 +63,7 @@ public class ProductController {
 //        return ResponseEntity.ok().body(mainService.find_all_products_with_name(name));
 //    }
 
-    //TODO bu işlem servis katlamanına alınacak
+
     @RequestMapping(value = "v1/product/{id}", method = RequestMethod.PATCH, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> partial_update(
             @RequestBody Map<String, Object> updates,
