@@ -15,7 +15,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-public class ProductService implements IService {
+public class ProductService implements IService<Product> {
 
     private final static String Not_Found_msg = "%s product not not";
 
@@ -28,9 +28,9 @@ public class ProductService implements IService {
     }
 
     @Override
-    public Product findById(Long id) {
-        return repository.findById(id).orElseThrow(
-                () -> new ProductNotFoundException(String.format(Not_Found_msg,id)));
+    public Optional<Product> findById(Long id) {
+        return Optional.ofNullable(repository.findById(id).orElseThrow(
+                () -> new ProductNotFoundException(String.format(Not_Found_msg, id))));
     }
 
     @Override
@@ -59,7 +59,7 @@ public class ProductService implements IService {
     }
 
     public ProductDto getProductDto(Long id){
-        Product product=this.findById(id);
+        Product product=this.findById(id).orElseThrow(()->new IllegalArgumentException("Product not found"));
         return new ProductDto(product.getName(), product.getPrice());
     }
 
@@ -73,17 +73,13 @@ public class ProductService implements IService {
             ).collect(Collectors.toList());
     }
 
-    public void updateProduct(Map<String, Object> updates, Product product){
-
+    public void updateProduct(Map<String, Object> updates, Optional<Product> optionalProduct){
+        Product product = optionalProduct.orElseThrow(()-> new IllegalArgumentException("Product not found"));
         updates.forEach((key, value) -> {
             Field field = ReflectionUtils.findField(product.getClass(), key);
-            //field.setAccessible(true) private veya protected alana erişilebilir hale getirmek için kullanılır,
             field.setAccessible(true);
-            //Reflection Utils, Spring Framework içinde sunulan bir sınıftır ve Java Reflection API'sini kullanarak
-            // kolayca nesne özelliklerine ve metotlarına erişmenizi sağlar.
             ReflectionUtils.setField(field, product, value);
-            repository.save(product);
         });
+        repository.save(product);
     }
-
 }

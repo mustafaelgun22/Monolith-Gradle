@@ -1,13 +1,16 @@
 package com.sha.springbootmicro.Service;
 
 import com.sha.springbootmicro.Model.Product;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.NoRepositoryBean;
 
 import java.util.Optional;
 
-public interface IService {
 
-    public <T> T findById(Long id);
+public interface IService<T> {
 
-    public <T> T saveEntity(Product product);
+    public Optional<T> findById(Long id);
+    public T saveEntity(T entity);
+
 
 }

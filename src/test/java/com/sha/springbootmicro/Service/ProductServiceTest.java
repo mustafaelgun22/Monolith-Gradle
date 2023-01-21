@@ -38,7 +38,8 @@ class ProductServiceTest {
     void findbyid() {
         long id = 10;
         when(productRepository.findById(id)).thenReturn(Optional.of(generate_product(id)));
-        Assertions.assertEquals(productService.findById(id).getId(),generate_product(id).getId());
+        Product product = productService.findById(id).orElseThrow(()-> new IllegalArgumentException("Product not found"));
+        Assertions.assertEquals(product.getId(),generate_product(id).getId());
     }
 
     @Test

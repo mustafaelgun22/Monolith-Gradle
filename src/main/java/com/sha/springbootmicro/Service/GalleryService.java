@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 
 import java.util.Optional;
 
-public class GalleryService implements IService{
+public class GalleryService implements IService<Gallery>{
 
 
     @Qualifier("galleryRepository")
@@ -23,7 +23,7 @@ public class GalleryService implements IService{
     }
 
     @Override
-    public <T> T saveEntity(Product product) {
-        return null;
+    public Gallery saveEntity(Gallery gallery) {
+        return galleryRepository.save(gallery);
     }
 }

@@ -65,12 +65,15 @@ public class ProductController {
 
     //TODO bu işlem servis katlamanına alınacak
     @RequestMapping(value = "v1/product/{id}", method = RequestMethod.PATCH, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ProductDto> partial_update(
+    public ResponseEntity<?> partial_update(
             @RequestBody Map<String, Object> updates,
             @PathVariable("id") Long id) {
-        Product product = mainService.findById(id);
+        Optional<Product> product = mainService.findById(id);
+        if (product == null) {
+            ResponseEntity.noContent();
+        }
         updates.remove("id");
-        mainService.updateProduct(updates,product);
+        mainService.updateProduct(updates, product);
         return ResponseEntity.ok(mainService.getProductDto(id));
     }
 
