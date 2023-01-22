@@ -47,8 +47,14 @@ public class ProductController {
 
     @DeleteMapping("v1/deleteProductByIds/")
     public ResponseEntity<List<Product>> deleteProductByIds(@RequestBody List<Long> ids) {
-        mainService.deleteProduct(ids);
+        mainService.deleteProducts(ids);
         return ResponseEntity.ok().body(mainService.getAllProducts());
+    }
+
+    @DeleteMapping("v1/product/{id}/")
+    public ResponseEntity<?> deleteProductById(@PathVariable Long id){
+        mainService.deleteProduct(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @GetMapping("v1/product/")

@@ -47,11 +47,15 @@ public class ProductService implements IService<Product> {
         return products;
     }
 
-    public void deleteProduct(List<Long> ids){
+    public void deleteProducts(List<Long> ids){
         for (Long id :ids
              ) {
             repository.deleteById(id);
         }
+    }
+
+    public void deleteProduct(Long id){
+        repository.deleteById(id);
     }
 
     public List<Product> getAllProducts(){
