@@ -80,6 +80,9 @@ public class Product {
     )
     private List<Gallery> galleries;
 
+    //TODO BURASI KALICI OLACAK ŞEKİLDE AYARLANACAK
+    @Transient
+    private Map<String,Object> attributes;
     @PostPersist
     public void postPersist() {
         System.out.println(String.format("%s product is created", this.name));

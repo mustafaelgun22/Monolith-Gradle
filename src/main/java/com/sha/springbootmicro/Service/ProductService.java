@@ -1,9 +1,11 @@
 package com.sha.springbootmicro.Service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sha.springbootmicro.Dto.ProductDto;
 import com.sha.springbootmicro.Exception.ProductNotFoundException;
 import com.sha.springbootmicro.Model.Product;
 import com.sha.springbootmicro.Repository.ProductRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ReflectionUtils;
@@ -19,6 +21,8 @@ public class ProductService implements IService<Product> {
 
     private final static String Not_Found_msg = "%s product not not";
 
+    @Autowired
+    private ObjectMapper objectMapper;
 
     @Qualifier("productRepository")
     private ProductRepository repository;
@@ -86,4 +90,21 @@ public class ProductService implements IService<Product> {
         });
         repository.save(product);
     }
+
+    public Optional<Product> addAttributes(Long id, Product product, Map<String,Object> attributes) {
+        if(product.getAttributes()!=null) {
+            Map<String,Object> exist_attibutes=product.getAttributes();
+            for (Map.Entry<String, Object> attribute : attributes.entrySet()) {
+                exist_attibutes.putIfAbsent(attribute.getKey(), attribute.getValue());
+            }
+            product.setAttributes(exist_attibutes);
+        }
+        else{
+            product.setAttributes(attributes);
+        }
+        repository.save(product);
+        Optional<Product> product1=this.findById(id);
+        return product1;
+    }
+
 }
