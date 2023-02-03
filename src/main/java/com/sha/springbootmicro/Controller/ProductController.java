@@ -4,6 +4,8 @@ import com.sha.springbootmicro.Model.Product;
 import com.sha.springbootmicro.Service.IService;
 import com.sha.springbootmicro.Service.ServiceEnum;
 import com.sha.springbootmicro.Service.ServiceFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +19,8 @@ import java.util.Optional;
 @Controller
 @RequestMapping
 public class ProductController {
+
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     private IService service;
 
@@ -53,6 +57,7 @@ public class ProductController {
     @DeleteMapping("v1/product/{id}/")
     public ResponseEntity<?> deleteProductById(@PathVariable Long id){
         service.deleteObject(id);
+        logger.info(id+" id product deleted");
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
