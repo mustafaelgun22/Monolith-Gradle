@@ -70,7 +70,7 @@ class ProductServiceTest {
     @Test
     void deleteProduct() {
         List<Long> ids = Arrays.asList(1L, 2L, 3L);
-        productService.deleteProducts(ids);
+        productService.deleteObjects(ids);
         //bir kere çağırılmış olmasını beklemekteyim.
         for(Long id:ids) {
             verify(productRepository, times(1)).deleteById(id);
@@ -85,7 +85,7 @@ class ProductServiceTest {
                     new Product.Builder(i, "Product 1", 10.0, "Description 1").build());
         });
         when(productRepository.findAll()).thenReturn(products);
-        Assertions.assertEquals(productService.getAllProducts(),products);
+        Assertions.assertEquals(productService.getAllObjects(),products);
     }
 
     @Test

@@ -17,7 +17,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-public class ProductService implements IService<Product> {
+public class ProductService implements IService<ProductDto,Product> {
 
     private final static String Not_Found_msg = "%s product not not";
 
@@ -51,22 +51,22 @@ public class ProductService implements IService<Product> {
         return products;
     }
 
-    public void deleteProducts(List<Long> ids){
+    public void deleteObjects(List<Long> ids){
         for (Long id :ids
              ) {
             repository.deleteById(id);
         }
     }
 
-    public void deleteProduct(Long id){
+    public void deleteObject(Long id){
         repository.deleteById(id);
     }
 
-    public List<Product> getAllProducts(){
+    public List<Product> getAllObjects(){
         return repository.findAll();
     }
 
-    public ProductDto getProductDto(Long id){
+    public ProductDto getDto(Long id){
         Product product=this.findById(id).orElseThrow(()->new IllegalArgumentException("Product not found"));
         return new ProductDto(product.getName(), product.getPrice());
     }
@@ -75,13 +75,13 @@ public class ProductService implements IService<Product> {
     // Stream, gerçekte bir veri kaynağını temsil etmez, ancak veri kaynağının öğelerine erişmenizi ve
     // bu öğeler üzerinde işlem yapmanızı sağlar. Stream işlemleri, veri kaynağının öğelerini değiştirmez,
     // yalnızca yeni bir veri kaynağı oluşturur.
-    public List<ProductDto> get_products_dto(List<Product> products){
+    public List<ProductDto> get_objects_dto(List<Product> products){
         return products.stream().map(product ->
-            this.getProductDto(product.getId())
+            this.getDto(product.getId())
             ).collect(Collectors.toList());
     }
 
-    public void updateProduct(Map<String, Object> updates, Optional<Product> optionalProduct){
+    public void updateObject(Map<String, Object> updates, Optional<Product> optionalProduct){
         Product product = optionalProduct.orElseThrow(()-> new IllegalArgumentException("Product not found"));
         updates.forEach((key, value) -> {
             Field field = ReflectionUtils.findField(product.getClass(), key);

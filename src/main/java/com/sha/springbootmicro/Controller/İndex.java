@@ -16,7 +16,7 @@ public class İndex {
 
     @GetMapping("/")
     public String index(Model model) {
-        model.addAttribute("products",productservice.getAllProducts());
+        model.addAttribute("products",productservice.getAllObjects());
         return "index";
     }
 }
