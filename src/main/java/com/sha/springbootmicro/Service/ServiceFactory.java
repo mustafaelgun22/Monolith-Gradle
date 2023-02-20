@@ -12,18 +12,11 @@ import java.util.Map;
 public class ServiceFactory {
 
 
-    @Qualifier("productRepository")
-    private ProductRepository productRepository;
-    @Qualifier("galleryRepository")
-    private GalleryRepository galleryRepository;
-
     Map<ServiceEnum,IService> services = new HashMap<>();
 
-    public ServiceFactory(ProductRepository productRepository, GalleryRepository galleryRepository) {
-        this.productRepository = productRepository;
-        this.galleryRepository = galleryRepository;
-        services.put(ServiceEnum.productService,new ProductService(productRepository));
-        services.put(ServiceEnum.galleryService,new GalleryService(galleryRepository));
+    public ServiceFactory(List<IService> services) {
+        services.put(ServiceEnum.productService, productService);
+        services.put(ServiceEnum.galleryService, galleryService);
     }
 
     public IService getService(ServiceEnum type) {
