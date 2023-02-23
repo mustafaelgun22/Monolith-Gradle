@@ -4,11 +4,13 @@ import com.sha.springbootmicro.Dto.GalleryDto;
 import com.sha.springbootmicro.Model.Gallery;
 import com.sha.springbootmicro.Repository.GalleryRepository;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+@Service
 public class GalleryService implements IService<GalleryDto,Gallery>{
 
 
@@ -67,5 +69,10 @@ public class GalleryService implements IService<GalleryDto,Gallery>{
     @Override
     public Optional<Gallery> addAttributes(Long id, Gallery object, Map<String, Object> attributes) {
         return Optional.empty();
+    }
+
+    @Override
+    public ServiceEnum getType() {
+        return ServiceEnum.galleryService;
     }
 }

@@ -18,7 +18,7 @@ public class GalleryController {
 
     public GalleryController(ServiceFactory serviceFactory) {
         this.serviceFactory = serviceFactory;
-        IService service =serviceFactory.getService(ServiceEnum.galleryService);
+        this.service =serviceFactory.getService(ServiceEnum.galleryService);
     }
 
     @PostMapping("v1/gallery")

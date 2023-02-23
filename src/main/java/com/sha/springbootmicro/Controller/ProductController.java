@@ -89,7 +89,7 @@ public class ProductController {
 
     @RequestMapping("v1/product/{id}/add_attributes/")
     public ResponseEntity<?> attributes(@PathVariable Long id,@RequestBody Map<String,Object> attributes) throws Throwable {
-        IService service = serviceFactory.getService2(ServiceEnum.productService);
+        IService service = serviceFactory.getService(ServiceEnum.productService);
         Product product= (Product) service.findById(id).orElseThrow(()-> new IllegalArgumentException("product not found"));
         return ResponseEntity.ok().body(service.addAttributes(id, product, attributes));
     }

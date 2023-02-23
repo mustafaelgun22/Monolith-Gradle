@@ -107,4 +107,9 @@ public class ProductService implements IService<ProductDto,Product> {
         return product1;
     }
 
+    @Override
+    public ServiceEnum getType() {
+        return ServiceEnum.productService;
+    }
+
 }

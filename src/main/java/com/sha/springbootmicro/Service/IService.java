@@ -26,5 +26,7 @@ public interface IService<P,T> {
 
     public Optional<T> addAttributes(Long id, T object, Map<String,Object> attributes);
 
+    public ServiceEnum getType();
+
 
 }
